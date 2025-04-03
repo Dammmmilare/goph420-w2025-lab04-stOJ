@@ -21,13 +21,28 @@ def multi_regression(y, z):
     float
     The coefficient of determination, r^2
     """
-    # Add a column of ones to z
-    z = np.column_stack((np.ones(len(z)), z))
+    #Ensure imputa are Numpy arrays and flatten y
+    y = np.asarray(y).flatten()
+    z = np.asarray(z)
 
-    # Calculate beta
-    beta = np.linalg.inv(z.T @ z) @ z.T @ y
+    # check if z is singular or non singular
+    if np.linalg.matrix_rank(z) < z.shape[1]:
+        raise ValueError("The matrix z is singular or non-invertible.")
+    
+    # Computing regression coefficients
+    Ztz = z.T @ z
+    Zty = z.T @ y
+    a = np.linalg.solve(Ztz, Zty)
+
+    # computing predicted values
+    y_hat = z @ a
 
     # Calculate residuals
-    residuals = y - z @ beta
+    residuals = y - y_hat
 
-    return beta, residuals
+    #Computing R-Squared
+    ss_total = np.sum((y - np.mean(y))**2)
+    ss_residuals = np.sum(residuals**2)
+    r_squared = 1 - (ss_residuals / ss_total)
+
+    return a, residuals, r_squared
