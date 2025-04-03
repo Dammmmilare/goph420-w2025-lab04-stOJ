@@ -43,6 +43,6 @@ def multi_regression(y, z):
     #Computing R-Squared
     ss_total = np.sum((y - np.mean(y))**2)
     ss_residuals = np.sum(residuals**2)
-    r_squared = 1 - (ss_residuals / ss_total)
+    r_sq = 1 - (ss_residuals / ss_total)
 
-    return a, residuals, r_squared
+    return a, residuals, r_sq

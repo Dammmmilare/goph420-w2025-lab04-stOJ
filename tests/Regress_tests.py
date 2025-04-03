@@ -1,4 +1,3 @@
-
 import sys
 import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
@@ -14,8 +13,8 @@ Y = np.log10(N)
 Z = np.column_stack((np.ones_like(M), M))  # Add bias term (1s) for intercept
 
 # Perform regression
-a, residuals, r_squared = multi_regression(Y, Z)
+a, residuals, r_sq = multi_regression(Y, Z)
 
 print(f"Regression Coefficients: {a}")
 print(f"Residuals: {residuals}")
-print(f"R^2: {r_squared}")
+print(f"R^2: {r_sq}")
