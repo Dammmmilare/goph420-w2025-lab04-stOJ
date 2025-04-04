@@ -1,15 +1,18 @@
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
 import numpy as np
-import pandas as pd 
+import pandas as pd  # type: ignore
 import matplotlib.pyplot as plt
 from goph420_lab04.regression import multi_regression
 
-# Load the earthquake data from CSV
-DATA_FILE = "earthquake_data.csv"  # Update this with the correct file path
-data = pd.read_csv(DATA_FILE)
+# Load the earthquake data from txt
+file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../data/M_data1.txt"))  # Update this with the correct file path
+data = pd.read_csv(file_path)
 
 # Ensure data has the required columns
 if "Magnitude" not in data.columns or "Frequency" not in data.columns:
-    raise ValueError("Error: Input CSV must contain 'Magnitude' and 'Frequency' columns.")
+    raise ValueError("Error: Input txt must contain 'Magnitude' and 'Frequency' columns.")
 
 # Remove rows where frequency is zero or negative (log10 is undefined for N=0)
 data = data[data["Frequency"] > 0].dropna()
